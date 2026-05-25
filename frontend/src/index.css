@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg: #0a0a0f;
+  --bg-card: #111118;
+  --bg-elevated: #16161f;
+  --border: #1e1e2e;
+  --border-bright: #2a2a3e;
+  --text: #e8e8f0;
+  --text-muted: #6b6b8a;
+  --text-dim: #3a3a5c;
+  --accent: #7c6af7;
+  --accent-dim: rgba(124, 106, 247, 0.12);
+  --accent-glow: rgba(124, 106, 247, 0.25);
+  --green: #4ade80;
+  --green-dim: rgba(74, 222, 128, 0.12);
+  --yellow: #fbbf24;
+  --yellow-dim: rgba(251, 191, 36, 0.12);
+  --red: #f87171;
+  --red-dim: rgba(248, 113, 113, 0.12);
+  --font-display: 'Space Mono', monospace;
+  --font-body: 'DM Sans', sans-serif;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-bright);
+  border-radius: 3px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border-bright);
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+textarea {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 1rem;
+  resize: vertical;
+  width: 100%;
+  transition: border-color 0.2s;
+  line-height: 1.6;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+textarea::placeholder {
+  color: var(--text-dim);
+}
+
+input {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}

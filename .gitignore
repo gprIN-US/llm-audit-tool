@@ -1,0 +1,28 @@
+# Environment files with real API keys - NEVER commit these
+.env
+.env.demo
+.env.local
+backend/.env
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
