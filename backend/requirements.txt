@@ -2,7 +2,7 @@ fastapi
 uvicorn
 python-dotenv
 pydantic
-google-generativeai
+google-genai
 exa-py
 langdetect
 transformers
