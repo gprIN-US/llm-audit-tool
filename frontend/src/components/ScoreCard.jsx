@@ -8,7 +8,6 @@ export default function ScoreCard({ title, score, subtitle, type }) {
 
   return (
     <div style={{
-      background: "var(--bg-card)",
       border: `1px solid ${border}`,
       borderRadius: "var(--radius)",
       padding: "18px 16px",
