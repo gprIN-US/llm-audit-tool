@@ -1,13 +1,13 @@
 import os
 import json
 import asyncio
-import google.generativeai as genai
+from google import genai
 from exa_py import Exa
 from models.schemas import HallucinationResult, Claim, Domain
 from services.claim_extractor import extract_claims, should_skip_hallucination_check
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-2.0-flash")
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 exa_client = Exa(api_key=os.getenv("EXA_API_KEY"))
 
 

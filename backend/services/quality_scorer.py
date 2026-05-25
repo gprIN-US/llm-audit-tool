@@ -1,10 +1,10 @@
 import os
 import json
-import google.generativeai as genai
+from google import genai
 from models.schemas import QualityResult, QualityDimension, Domain
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-2.0-flash")
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 
 QUALITY_DIMENSIONS = [
