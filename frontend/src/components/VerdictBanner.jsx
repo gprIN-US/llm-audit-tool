@@ -1,61 +1,21 @@
-export default function VerdictBanner({ passed, verdict, domain, contextMode, rulesetVersion }) {
+export default function VerdictBanner({ passed, verdict, domain, contextMode }) {
   const color = passed ? "var(--green)" : "var(--red)"
-  const bg = passed ? "var(--green-dim)" : "var(--red-dim)"
+  const bg = passed ? "var(--green-bg)" : "var(--red-bg)"
+  const border = passed ? "var(--green-border)" : "var(--red-border)"
 
   return (
-    <div style={{
-      background: bg,
-      border: `1px solid ${color}`,
-      borderRadius: "var(--radius)",
-      padding: "1.25rem 1.5rem"
-    }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" }}>
+    <div style={{ background: bg, border: `1px solid ${border}`, borderRadius: "var(--radius)", padding: "16px 20px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16 }}>
         <div style={{ flex: 1 }}>
-          <div style={{
-            fontSize: "11px",
-            fontWeight: 700,
-            color: color,
-            textTransform: "uppercase",
-            letterSpacing: "0.08em",
-            marginBottom: "0.4rem"
-          }}>
-            {passed ? "Passed Evaluation" : "Did Not Pass Evaluation"}
+          <div style={{ fontSize: 11, fontWeight: 600, color, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 5 }}>
+            {passed ? "Passed evaluation" : "Did not pass"}
           </div>
-          <p style={{ fontSize: "0.9rem", color: "var(--text)", lineHeight: 1.5 }}>
-            {verdict}
-          </p>
+          <p style={{ fontSize: 14, color: "var(--text)", lineHeight: 1.6 }}>{verdict}</p>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem", alignItems: "flex-end", flexShrink: 0 }}>
-          <span style={{
-            fontSize: "10px",
-            background: "var(--accent-dim)",
-            color: "var(--accent)",
-            padding: "2px 6px",
-            borderRadius: "4px"
-          }}>
-            {domain}
-          </span>
-          {contextMode === "inferred" && (
-            <span style={{
-              fontSize: "10px",
-              background: "var(--yellow-dim)",
-              color: "var(--yellow)",
-              padding: "2px 6px",
-              borderRadius: "4px"
-            }}>
-              context inferred
-            </span>
-          )}
-          {contextMode === "none" && (
-            <span style={{
-              fontSize: "10px",
-              background: "var(--yellow-dim)",
-              color: "var(--yellow)",
-              padding: "2px 6px",
-              borderRadius: "4px"
-            }}>
-              no context
-            </span>
+        <div style={{ display: "flex", gap: 6, flexShrink: 0, flexWrap: "wrap", justifyContent: "flex-end" }}>
+          <span className="tag tag-neutral">{domain}</span>
+          {contextMode !== "full" && (
+            <span className="tag tag-yellow">{contextMode === "inferred" ? "inferred context" : "no context"}</span>
           )}
         </div>
       </div>

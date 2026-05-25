@@ -5,69 +5,88 @@ import BatchPage from "./pages/BatchPage"
 import MethodologyPage from "./pages/MethodologyPage"
 
 export default function App() {
-  const [activePage, setActivePage] = useState("audit")
+  const [page, setPage] = useState("audit")
+
+  const nav = [
+    { id: "audit", label: "Audit" },
+    { id: "leaderboard", label: "Leaderboard" },
+    { id: "batch", label: "Bulk Audit" },
+    { id: "methodology", label: "How it works" },
+  ]
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--text)" }}>
-      <nav style={{
+    <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
+      <header style={{
         borderBottom: "1px solid var(--border)",
-        padding: "0 2rem",
-        display: "flex",
-        alignItems: "center",
-        gap: "2rem",
-        height: "56px",
+        background: "rgba(250,250,248,0.92)",
+        backdropFilter: "blur(12px)",
         position: "sticky",
         top: 0,
-        background: "var(--bg)",
         zIndex: 100,
-        backdropFilter: "blur(12px)"
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginRight: "auto" }}>
-          <span style={{ fontSize: "20px" }}>🔬</span>
-          <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.1rem", color: "var(--accent)" }}>
-            LLM Audit
-          </span>
-          <span style={{
-            fontSize: "10px",
-            background: "var(--accent-dim)",
-            color: "var(--accent)",
-            padding: "2px 6px",
-            borderRadius: "4px",
-            fontFamily: "monospace"
-          }}>v1.0</span>
-        </div>
-
-        {[
-          { id: "audit", label: "Audit" },
-          { id: "leaderboard", label: "Leaderboard" },
-          { id: "batch", label: "Bulk Audit" },
-          { id: "methodology", label: "Methodology" }
-        ].map(item => (
+        <div style={{
+          maxWidth: 960,
+          margin: "0 auto",
+          padding: "0 24px",
+          height: 52,
+          display: "flex",
+          alignItems: "center",
+          gap: 32,
+        }}>
           <button
-            key={item.id}
-            onClick={() => setActivePage(item.id)}
+            onClick={() => setPage("audit")}
             style={{
               background: "none",
               border: "none",
-              color: activePage === item.id ? "var(--accent)" : "var(--text-muted)",
-              fontFamily: "var(--font-body)",
-              fontSize: "0.875rem",
               cursor: "pointer",
-              padding: "4px 0",
-              borderBottom: activePage === item.id ? "2px solid var(--accent)" : "2px solid transparent",
-              transition: "all 0.2s"
+              padding: 0,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
             }}
           >
-            {item.label}
+            <span style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "1.1rem",
+              color: "var(--text)",
+              fontStyle: "italic",
+            }}>
+              Audit
+            </span>
+            <span style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: "1.1rem",
+              color: "var(--text)",
+              fontWeight: 300,
+            }}>
+              AI
+            </span>
           </button>
-        ))}
-      </nav>
+
+          <nav style={{ display: "flex", gap: 4, marginLeft: "auto" }}>
+            {nav.map(item => (
+              <button
+                key={item.id}
+                onClick={() => setPage(item.id)}
+                className={`btn-ghost ${page === item.id ? "active" : ""}`}
+                style={{
+                  fontSize: "13px",
+                  fontWeight: page === item.id ? 500 : 400,
+                  color: page === item.id ? "var(--text)" : "var(--text-muted)",
+                }}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+        </div>
+      </header>
 
       <main>
-        {activePage === "audit" && <AuditPage />}
-        {activePage === "leaderboard" && <LeaderboardPage />}
-        {activePage === "batch" && <BatchPage />}
-        {activePage === "methodology" && <MethodologyPage />}
+        {page === "audit" && <AuditPage />}
+        {page === "leaderboard" && <LeaderboardPage />}
+        {page === "batch" && <BatchPage />}
+        {page === "methodology" && <MethodologyPage />}
       </main>
     </div>
   )

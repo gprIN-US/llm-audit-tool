@@ -1,52 +1,23 @@
 export default function QualityDimensions({ dimensions }) {
-  if (!dimensions || dimensions.length === 0) return null
+  if (!dimensions?.length) return null
 
   return (
     <div className="card">
-      <h3 style={{ fontFamily: "var(--font-display)", fontSize: "0.85rem", marginBottom: "1rem", color: "var(--text-muted)" }}>
-        QUALITY BREAKDOWN
-      </h3>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+      <p style={{ fontSize: 13, fontWeight: 600, color: "var(--text)", marginBottom: 14 }}>Quality Breakdown</p>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
         {dimensions.map((dim, i) => {
           const pct = (dim.score / 10) * 100
           const color = pct >= 80 ? "var(--green)" : pct >= 60 ? "var(--yellow)" : "var(--red)"
           return (
-            <div key={i} style={{
-              background: "var(--bg-elevated)",
-              borderRadius: "var(--radius-sm)",
-              padding: "0.875rem"
-            }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-                <span style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--text)" }}>
-                  {dim.name}
-                </span>
-                <span style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "0.9rem",
-                  fontWeight: 700,
-                  color: color
-                }}>
-                  {dim.score}/10
-                </span>
+            <div key={i} style={{ padding: "12px 14px", background: "var(--bg-subtle)", borderRadius: "var(--radius-sm)", border: "1px solid var(--border)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                <span style={{ fontSize: 12, fontWeight: 500 }}>{dim.name}</span>
+                <span style={{ fontSize: 13, fontWeight: 600, color }}>{dim.score}/10</span>
               </div>
-              <div style={{
-                height: "4px",
-                background: "var(--border)",
-                borderRadius: "2px",
-                marginBottom: "0.5rem",
-                overflow: "hidden"
-              }}>
-                <div style={{
-                  height: "100%",
-                  width: `${pct}%`,
-                  background: color,
-                  borderRadius: "2px",
-                  transition: "width 0.8s ease"
-                }} />
+              <div style={{ height: 3, background: "var(--border)", borderRadius: 2, marginBottom: 6, overflow: "hidden" }}>
+                <div style={{ height: "100%", width: `${pct}%`, background: color, borderRadius: 2 }} />
               </div>
-              <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", lineHeight: 1.4 }}>
-                {dim.explanation}
-              </p>
+              <p style={{ fontSize: 11, color: "var(--text-muted)", lineHeight: 1.5 }}>{dim.explanation}</p>
             </div>
           )
         })}
