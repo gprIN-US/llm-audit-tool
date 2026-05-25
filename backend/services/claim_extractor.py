@@ -3,23 +3,12 @@ import json
 from google import genai
 from models.schemas import Domain
 
-
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-
 IMPLICIT_CLAIM_PATTERNS = [
-    "as everyone knows",
-    "obviously",
-    "it is well established",
-    "studies show",
-    "research indicates",
-    "scientists agree",
-    "experts say",
-    "it is a fact",
-    "clearly",
-    "undeniably",
-    "as we all know",
-    "it has been proven"
+    "as everyone knows", "obviously", "it is well established", "studies show",
+    "research indicates", "scientists agree", "experts say", "it is a fact",
+    "clearly", "undeniably", "as we all know", "it has been proven"
 ]
 
 
@@ -45,12 +34,11 @@ async def extract_claims(response_text: str, domain: Domain, prompt_text: str = 
 Response:
 "{response_text[:2000]}"
 
-Rules for extraction:
+Rules:
 1. Break compound sentences into individual atomic claims
-2. Extract implied claims from phrases like "as everyone knows", "studies show", "it is well established"
-3. Include: statistics, percentages, dates, names and their attributed actions, scientific facts, historical events, legal statements, named organizations
+2. Extract implied claims from phrases like "as everyone knows", "studies show"
+3. Include: statistics, percentages, dates, names and attributed actions, scientific facts, historical events
 4. Exclude: pure opinions, recommendations, hypotheticals, questions
-5. For each claim, note if it contains implicit authority markers like "studies show" or "experts say"
 
 Return ONLY a JSON array, no markdown, no backticks:
 [
@@ -66,14 +54,16 @@ Return ONLY a JSON array, no markdown, no backticks:
 Return empty array [] if no verifiable claims exist."""
 
     try:
-        result = model.generate_content(prompt)
-        text = result.text.strip()
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt
+        )
+        text = response.text.strip()
         if text.startswith("```"):
             text = text.split("```")[1]
             if text.startswith("json"):
                 text = text[4:]
         claims = json.loads(text.strip())
-
         for claim in claims:
             original = claim.get("original_text", "").lower()
             for pattern in IMPLICIT_CLAIM_PATTERNS:
@@ -81,7 +71,7 @@ Return empty array [] if no verifiable claims exist."""
                     claim["has_implicit_authority"] = True
                     claim["implicit_marker"] = pattern
                     break
-
         return claims
-    except Exception:
+    except Exception as e:
+        print(f"Claim extraction error: {e}")
         return []
